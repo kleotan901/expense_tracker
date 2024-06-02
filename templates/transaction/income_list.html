@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h3>All Transactions</h3>
+  <table class="table table-hover">
+    <thead class="table-active">
+    <tr>
+      <th>Date</th>
+      <th>Category</th>
+      <th>Description</th>
+      <th>Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for income in income_list %}
+      <tr>
+        <td>{{ income.date }}</td>
+        <td>{{ income.category }}</td>
+        <td>{{ income.description }}</td>
+        <td>+{{ income.amount }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,34 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="80a00a35-41a7-4ec3-bda4-4a80068e1ff3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/expense_tracker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/expense_tracker.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="80a00a35-41a7-4ec3-bda4-4a80068e1ff3" name="Changes" comment="Implemented AllTransactionView class in view.py and added routes with template to display all transactions">
+      <change afterPath="$PROJECT_DIR$/account/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account/migrations/0002_remove_account_user.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account/migrations/0003_alter_account_balance.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/expense_tracker/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transaction/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/transaction/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transaction/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/transaction/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2hJUIH2XWrRGZxIVPQogdjbWAwd" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Django Server.expense_tracker.executor": "Run",
     "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -45,6 +63,7 @@
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="expense_tracker.settings" />
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
@@ -79,11 +98,54 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1717311592997</updated>
-      <workItem from="1717311606029" duration="558000" />
+      <workItem from="1717311606029" duration="1920000" />
+      <workItem from="1717313622728" duration="787000" />
+      <workItem from="1717314463892" duration="1936000" />
     </task>
+    <task id="LOCAL-00001" summary="Added new app transaction">
+      <option name="closed" value="true" />
+      <created>1717312198085</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1717312198085</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added models in models.py">
+      <option name="closed" value="true" />
+      <created>1717312586819</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1717312586819</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added requirements.txt">
+      <option name="closed" value="true" />
+      <created>1717312701933</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1717312701933</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Implemented AllTransactionView class in view.py and added routes with template to display all transactions">
+      <option name="closed" value="true" />
+      <created>1717313992268</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1717313992268</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Added new app transaction" />
+    <MESSAGE value="Added models in models.py" />
+    <MESSAGE value="Added requirements.txt" />
+    <MESSAGE value="Implemented AllTransactionView class in view.py and added routes with template to display all transactions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented AllTransactionView class in view.py and added routes with template to display all transactions" />
   </component>
 </project>
