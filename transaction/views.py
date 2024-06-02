@@ -7,6 +7,7 @@ from transaction.models import Expense, Income
 class AllTransactionsView(generic.ListView):
     template_name = "transaction/transactions.html"
     context_object_name = "transactions"
+    paginate_by = 5
 
     def get_queryset(self):
         incomes = Income.objects.all()
@@ -40,3 +41,13 @@ class AllTransactionsView(generic.ListView):
             key=lambda x: x["date"], reverse=True
         )
         return transactions
+
+
+class ExpenseListView(generic.ListView):
+    model = Expense
+    paginate_by = 5
+
+
+class IncomeListView(generic.ListView):
+    model = Income
+    paginate_by = 5
