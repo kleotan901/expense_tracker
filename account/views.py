@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.views import generic
 
-# Create your views here.
+from account.models import Account
+
+
+class AccountListView(generic.ListView):
+    model = Account
+    template_name = "account/accounts.html"
+    paginate_by = 5
