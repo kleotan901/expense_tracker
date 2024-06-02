@@ -4,13 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80a00a35-41a7-4ec3-bda4-4a80068e1ff3" name="Changes" comment="Added requirements.txt">
-      <change afterPath="$PROJECT_DIR$/templates/transaction/transactions.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/transaction/urls.py" afterDir="false" />
+    <list default="true" id="80a00a35-41a7-4ec3-bda4-4a80068e1ff3" name="Changes" comment="Implemented AllTransactionView class in view.py and added routes with template to display all transactions">
+      <change afterPath="$PROJECT_DIR$/account/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account/migrations/0002_remove_account_user.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/account/migrations/0003_alter_account_balance.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/expense_tracker/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/expense_tracker/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/expense_tracker/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transaction/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/transaction/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/transaction/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/transaction/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transaction/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/transaction/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,25 +33,28 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2hJUIH2XWrRGZxIVPQogdjbWAwd" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Django Server.expense_tracker.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Django Server.expense_tracker.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="expense_tracker" type="Python.DjangoServer" factoryName="Django server">
       <module name="expense_tracker" />
@@ -94,7 +99,8 @@
       <option name="presentableId" value="Default" />
       <updated>1717311592997</updated>
       <workItem from="1717311606029" duration="1920000" />
-      <workItem from="1717313622728" duration="118000" />
+      <workItem from="1717313622728" duration="787000" />
+      <workItem from="1717314463892" duration="1936000" />
     </task>
     <task id="LOCAL-00001" summary="Added new app transaction">
       <option name="closed" value="true" />
@@ -120,16 +126,26 @@
       <option name="project" value="LOCAL" />
       <updated>1717312701933</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Implemented AllTransactionView class in view.py and added routes with template to display all transactions">
+      <option name="closed" value="true" />
+      <created>1717313992268</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1717313992268</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Added new app transaction" />
     <MESSAGE value="Added models in models.py" />
     <MESSAGE value="Added requirements.txt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added requirements.txt" />
+    <MESSAGE value="Implemented AllTransactionView class in view.py and added routes with template to display all transactions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented AllTransactionView class in view.py and added routes with template to display all transactions" />
   </component>
 </project>
