@@ -1,4 +1,5 @@
 from django.db import models
+
 # TODO from account.models import Account
 
 
@@ -16,7 +17,7 @@ class Category(models.Model):
 
 
 class Expense(models.Model):
-    #account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    # account = models.ForeignKey(Account, on_delete=models.CASCADE)
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
@@ -32,7 +33,7 @@ class Expense(models.Model):
 
 
 class Income(models.Model):
-    #account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    # account = models.ForeignKey(Account, on_delete=models.CASCADE)
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
