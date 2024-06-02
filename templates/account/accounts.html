@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <table class="table table-hover">
+    <thead class="table-active">
+    <tr>
+      <th>Account type</th>
+      <th>Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for account in account_list %}
+      <tr>
+        <td>{{ account.account_type }}</td>
+        <td>{{ account.balance }}</td>
+      </tr>
+    {% endfor %}
+
+    </tbody>
+  </table>
+{% endblock %}
