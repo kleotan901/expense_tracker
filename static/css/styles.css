@@ -1,46 +1,76 @@
-@media (max-width: 992px) {
-  .sidebar {
-      width: 100%;
-      min-width: 0; /* Установка минимальной ширины на 0 для обеспечения полного сжатия */
-      position: static; /* Убираем фиксированную позицию */
-      border-radius: 0; /* Убираем скругление углов */
-      padding: 0; /* Убираем внутренний отступ */
-      box-shadow: none; /* Убираем тень */
-  }
-}
-
+/* General styles */
 body, html {
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
     height: 100%;
-    background: linear-gradient(to bottom, #e1e1e3, #b9c6d5, #abbfd5); /* Фон сайта */
+    background: #c4d4e5;
 }
 
-ul{
+.balance-negative{
+    color: #e72424;
+}
+
+.balance-positive{
+    color: #136c11;
+}
+.total-expense{
+    text-align: right;
+    font-size: 2em;
+    color: #943b3b;
+}
+
+.total-income{
+    text-align: right;
+    font-size: 2em;
+    color: green;
+}
+
+ul {
     padding: 0;
 }
 
-li{
+li {
     list-style: none;
 }
 
-.small {
-  font-size: 0.5em;
+/* Header styles */
+.header {
+    background: #3498db; /* Flat color */
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+    border-bottom: 1px solid #2980b9;
+}
+
+.header .row {
+    margin: 0;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+.login{
+    text-align: left;
+    background: #7cb5ef;
+    box-shadow: 1px 3px 5px rgba(233, 241, 250, 0.8);
+}
+a .login{
+    color: white;
 }
 
 /* Sidebar container */
 .sidebar {
     width: 250px;
-    background: linear-gradient(to bottom, #d7d2cc, #304352);
-    color: #ffffff;
-    min-height: 100vh;
-    padding-top: 20px;
-    position: fixed;
-    box-shadow: inset 5px 0 10px rgba(0, 0, 0, 0.2), 5px 0 15px rgba(0, 0, 0, 0.3);
-    border-right: 1px solid #555;
-    border-radius: 10px 0 0 10px;
+    background: #2c3e50; /* Flat color */
+    color: #ecf0f1;
+    height: 100vh; /* Full height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border-right: 1px solid #34495e; /* Simplified border */
     padding: 20px;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
 /* Sidebar header */
@@ -48,49 +78,263 @@ li{
     text-align: center;
     padding: 10px;
     font-size: 1.5em;
-    border-bottom: 2px solid #888;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-    font-family: 'Georgia', serif; /* Подходящий шрифт для заголовка */
-    color: #444;
-    background-color: #ddd; /* Фон заголовка */
-    border-radius: 8px;
+    border-bottom: 1px solid #34495e;
+    font-family: 'Georgia', serif; /* Keep the font for header */
+    color: #ecf0f1;
+    background-color: #2980b9; /* Flat color */
+    border-radius: 5px;
 }
 
 /* Sidebar links */
 .sidebar .nav-link {
-    color: #444;
+    color: #ecf0f1;
     padding: 10px 20px;
     display: block;
     font-size: 1.1em;
-    transition: background-color 0.3s, color 0.3s, transform 0.3s;
-    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 5px;
     margin-bottom: 10px;
-    background-color: #ddd;
-    box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.7), inset -2px -2px 5px rgba(0, 0, 0, 0.2);
+    background-color: #34495e; /* Flat color */
     text-transform: uppercase;
     font-family: 'Verdana', sans-serif;
 }
 
 .sidebar .nav-link:hover {
-    background-color: #ccc;
-    color: #333;
-    transform: translateY(-2px);
-    box-shadow: inset 3px 3px 7px rgba(255, 255, 255, 0.8), inset -3px -3px 7px rgba(0, 0, 0, 0.3);
+    background-color: #2980b9; /* Flat color */
+    color: #ecf0f1;
 }
 
 .sidebar .nav-link.active {
-    background-color: #bbb;
-    color: #000;
-    box-shadow: inset 3px 3px 7px rgba(255, 255, 255, 0.8), inset -3px -3px 7px rgba(0, 0, 0, 0.3);
+    background-color: #3498db; /* Flat color */
+    color: #ffffff;
     font-weight: bold;
+}
+
+/* Dropdown menu */
+.dropdown {
+    display: none; /* Initially hidden */
+    padding-left: 20px; /* Indent dropdown items */
+    flex-direction: column;
+}
+
+.dropdown-item {
+    margin-bottom: 5px;
+    opacity: 0;
+    transform: translateY(20px); /* Start items 20px below */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-item a {
+    color: #4da1b6;
+    text-decoration: none;
+    font-size: 1em;
+}
+
+.dropdown-item a:hover {
+    color: #2980b9; /* Flat color */
+}
+
+/* Animation for dropdown items */
+.dropdown-item.show {
+    opacity: 1;
+    transform: translateY(0); /* Move items to their original position */
 }
 
 /* Main content area */
 .content {
-    font-family: 'Georgia', serif;
+    margin-left: 0; /* Ensure main content doesn't overlap the sidebar */
+    padding: 20px;
+    font-family: 'Verdana', sans-serif;
 }
 
-/* Adding a hover effect for sidebar */
-.sidebar:hover {
-    box-shadow: inset 5px 0 15px rgba(0, 0, 0, 0.4), 5px 0 20px rgba(0, 0, 0, 0.5);
+
+/* Table styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
 }
+
+.table th,
+.table td {
+    padding: 10px;
+    text-align: left;
+    color: #3f4e5d;
+    background: #8facc9;
+    border-bottom: 2px solid #ddd;
+}
+
+.table thead th {
+    background-color: #3498db; /* Flat blue color */
+    color: #fff;
+}
+
+
+/* Category list styling */
+.category-list {
+    margin-top: 10px; /* Add some space above the category list */
+}
+
+.category-list li {
+    background-color: #fff; /* White background */
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 10px; /* Add some space between categories */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: background-color 0.3s;
+}
+
+.category-list li:hover {
+    background-color: #f2f2f2; /* Light grey background on hover */
+}
+
+/* Link styling */
+a {
+    color: #23506e; /* Flat blue color */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+
+/* Form styles */
+.flat-form {
+    background: #85a2c4;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.flat-form h1 {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: #3498db; /* Flat blue color */
+}
+
+.flat-form p {
+    color: #1b2650;
+    font-style: oblique;
+    font-size: 16px;
+}
+
+.flat-form input[type="text"],
+.flat-form input[type="checkbox"],
+.flat-form input[type="number"],
+.flat-form select,
+.flat-form textarea {
+    width: 70%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    background: #cedbe8;
+    box-shadow: 1px 2px 7px #797575;
+    border-radius: 5px;
+    box-sizing: content-box;
+    font-size: 0.8em;
+}
+
+.flat-form input[type="submit"] {
+    background: #142734; /* Flat blue color */
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.flat-form input[type="submit"]:hover {
+    background: #2980b9; /* Darker flat blue color */
+}
+
+
+/* Pagination container */
+.pagination-container {
+    margin-top: 20px;
+    text-align: left;
+}
+
+/* Pagination styling */
+.pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 0;
+    border-radius: 4px;
+}
+
+.pagination .page-item {
+    display: inline;
+}
+
+.pagination .page-link {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #3498db; /* Flat blue color */
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.pagination .page-link:hover {
+    z-index: 2;
+    color: #fff;
+    background-color: #3498db; /* Flat blue color */
+    border-color: #3498db; /* Flat blue color */
+}
+
+.pagination .page-link:focus,
+.pagination .page-link:hover {
+    color: #fff;
+    background-color: #3498db; /* Flat blue color */
+    border-color: #3498db; /* Flat blue color */
+}
+
+.pagination .page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #3498db; /* Flat blue color */
+    border-color: #3498db; /* Flat blue color */
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+    .pagination-container {
+        margin-top: 10px;
+    }
+}
+
+
+/* Responsive styles */
+@media (max-width: 992px) {
+    .content {
+        margin-left: 0; /* Adjust content margin */
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+    .content {
+        margin-left: 0; /* Adjust content margin */
+    }
+}
+
+
+/* Responsive styles */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 100%;
+        min-width: 0; /* Allow full collapse */
+        border-radius: 0; /* Remove rounded corners */
+        padding: 0; /* Remove padding */
+        border-right: none; /* Remove border */
+    }
+
+
+}
+
+

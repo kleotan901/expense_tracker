@@ -1,31 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h3>All Transactions</h3>
-  <table class="table table-hover">
-    <thead class="table-active">
-    <tr>
-      <th>Date</th>
-      <th>Category</th>
-      <th>Description</th>
-      <th>Amount</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for transaction in transactions %}
+  <div class="content">
+    <h4>Total balance:
+      
+        {% if balance < 0 %}
+          <span class="balance-negative">{{ balance }}</span>
+        {% else %}
+          <span class="balance-positive">+ {{ balance }}</span>
+        {% endif %}
+      
+    </h4>
+    <table class="table table-hover">
+      <thead class="table-active">
       <tr>
-        <td>{{ transaction.date }}</td>
-        <td>{{ transaction.category }}</td>
-        <td>{{ transaction.description }}</td>
-        <td>
-          {% if transaction.type == 'income' %}
-            +{{ transaction.amount }}
-          {% else %}
-            -{{ transaction.amount }}
-          {% endif %}
-        </td>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Amount</th>
       </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+      {% for transaction in transactions %}
+        <tr>
+          <td>{{ transaction.date }}</td>
+          <td>{{ transaction.category }}</td>
+          <td>{{ transaction.description }}</td>
+          <td>
+            {% if transaction.type == 'income' %}
+              +{{ transaction.amount }}
+            {% else %}
+              -{{ transaction.amount }}
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}
