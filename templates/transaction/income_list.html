@@ -1,7 +1,20 @@
 {% extends "base.html" %}
+{% load humanize %}
 
 {% block content %}
-  <h3>All Transactions</h3>
+  <div class="row">
+    <div class="col">
+      <h4>Income<a href="{% url 'transaction:income-create' %}"> + </a></h4>
+    </div>
+    <div class="col total-income">
+      {% if total_income_sum is not None %}
+      + {{ total_income_sum|intcomma }}
+      {% else %}
+        0.00
+      {% endif %}
+    </div>
+  </div>
+
   <table class="table table-hover">
     <thead class="table-active">
     <tr>
