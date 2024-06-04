@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h3 class="form-multiline">Add new operation</h3>
+
+  {% if error %}
+    <p class="error-message">{{ error }}</p>
+  {% endif %}
+
+  <form action="" method="post" class="flat-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br>
+    <input type="submit" value="Submit" class="submit-button">
+  </form>
+{% endblock %}
