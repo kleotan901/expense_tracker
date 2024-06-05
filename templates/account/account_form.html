@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 
 {% block content %}
   <h3 class="form-multiline">Add new account</h3>
@@ -9,7 +10,7 @@
 
   <form action="" method="post" class="flat-form">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form|crispy }}
     <br>
     <input type="submit" value="Submit" class="submit-button">
   </form>
