@@ -5,9 +5,9 @@
     <h4>Total balance:
       
         {% if balance < 0 %}
-          <span class="balance-negative">{{ balance }}</span>
+          <span class="balance-negative">{{ balance|floatformat:2 }}</span>
         {% else %}
-          <span class="balance-positive">+ {{ balance }}</span>
+          <span class="balance-positive">+ {{ balance|floatformat:2 }}</span>
         {% endif %}
       
     </h4>
