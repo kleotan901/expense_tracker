@@ -8,7 +8,7 @@
     </div>
     <div class="col total-income">
       {% if total_income_sum is not None %}
-      + {{ total_income_sum|floatformat:2 }}
+      + {{ total_income_sum|floatformat:2 }} {{ currency }}
       {% else %}
         0.00
       {% endif %}
@@ -30,7 +30,7 @@
         <td>{{ income.date }}</td>
         <td>{{ income.category }}</td>
         <td>{{ income.description }}</td>
-        <td>+{{ income.amount }}</td>
+        <td>+{{ income.amount }} {{ income.account.currency }}</td>
       </tr>
     {% endfor %}
     </tbody>

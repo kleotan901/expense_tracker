@@ -18,7 +18,15 @@ class ExpenseForm(forms.ModelForm):
 
     class Meta:
         model = Expense
-        fields = "__all__"
+        fields = ["category", "account", "amount", "date", "description"]
+
+    def save(self, commit=True):
+        expense = super().save(commit=False)
+        # Set the main_currency based on the selected account
+        expense.main_currency = expense.account.currency
+        if commit:
+            expense.save()
+        return expense
 
 
 class IncomeForm(forms.ModelForm):
@@ -29,4 +37,4 @@ class IncomeForm(forms.ModelForm):
 
     class Meta:
         model = Income
-        fields = "__all__"
+        fields = ["category", "account", "amount", "date", "description"]

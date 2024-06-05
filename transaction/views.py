@@ -1,9 +1,10 @@
 from django.db.models import Sum
-from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.views import generic
 
-from account.models import Account
+from account.currency_exchange import get_total_amount, get_accounts_balance
+from account.models import Account, Currency
+
 from transaction.forms import CategoryForm, ExpenseForm, IncomeForm
 from transaction.models import Expense, Income, Category
 
@@ -18,11 +19,9 @@ class AllTransactionsView(generic.ListView):
         incomes = Income.objects.all()
         expenses = Expense.objects.all()
         account_balance = Account.objects.all()
-        context["total_expense_sum"] = expenses.aggregate(Sum("amount"))["amount__sum"]
-        context["total_income_sum"] = incomes.aggregate(Sum("amount"))["amount__sum"]
-        context["account_balance"] = (
-            account_balance.aggregate(Sum("balance"))["balance__sum"]
-        )
+        context["total_income_sum"] = get_total_amount(incomes)
+        context["total_expense_sum"] = get_total_amount(expenses)
+        context["account_balance"] = get_accounts_balance(account_balance)
         # Проверяем, являются ли значения None, если да, то присваиваем им значение 0
         total_expense_sum = context["total_expense_sum"] if context["total_expense_sum"] is not None else 0
         total_income_sum = context["total_income_sum"] if context["total_income_sum"] is not None else 0
@@ -33,6 +32,8 @@ class AllTransactionsView(generic.ListView):
                 - total_expense_sum
                 + account_balance_sum
         )
+
+        context["currency"] = Currency.objects.get(id=1)
 
         return context
 
@@ -50,6 +51,7 @@ class AllTransactionsView(generic.ListView):
                     "description": income.description,
                     "category": income.category,
                     "type": "income",
+                    "account_currency": income.account.currency
                 }
             )
 
@@ -60,7 +62,7 @@ class AllTransactionsView(generic.ListView):
                     "amount": expense.amount,
                     "description": expense.description,
                     "category": expense.category,
-                    "type": "expense",
+                    "account_currency": expense.account.currency
                 }
             )
 
@@ -75,7 +77,8 @@ class ExpenseListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(ExpenseListView, self).get_context_data(**kwargs)
         expenses = Expense.objects.all()
-        context["total_expense_sum"] = expenses.aggregate(Sum("amount"))["amount__sum"]
+        context["total_expense_sum"] = get_total_amount(expenses)
+        context["currency"] = Currency.objects.get(id=1)
 
         return context
 
@@ -87,7 +90,8 @@ class IncomeListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(IncomeListView, self).get_context_data(**kwargs)
         income = Income.objects.all()
-        context["total_income_sum"] = income.aggregate(Sum("amount"))["amount__sum"]
+        context["total_income_sum"] = get_total_amount(income)
+        context["currency"] = Currency.objects.get(id=1)
 
         return context
 
