@@ -16,53 +16,53 @@ class AllTransactionsView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(AllTransactionsView, self).get_context_data(**kwargs)
-        incomes = Income.objects.all()
-        expenses = Expense.objects.all()
-        account_balance = Account.objects.all()
+        incomes = Income.objects.select_related("account", "category")
+        expenses = Expense.objects.select_related("account", "category")
         context["total_income_sum"] = get_total_amount(incomes)
         context["total_expense_sum"] = get_total_amount(expenses)
-        context["account_balance"] = get_accounts_balance(account_balance)
-        # Проверяем, являются ли значения None, если да, то присваиваем им значение 0
-        total_expense_sum = context["total_expense_sum"] if context["total_expense_sum"] is not None else 0
-        total_income_sum = context["total_income_sum"] if context["total_income_sum"] is not None else 0
-        account_balance_sum = context["account_balance"] if context["account_balance"] is not None else 0
+        context["account_balance"] = get_accounts_balance(Account.objects.all())
 
-        context["balance"] = (
-                total_income_sum
-                - total_expense_sum
-                + account_balance_sum
-        )
+        total_income_sum = context["total_income_sum"] or 0
+        total_expense_sum = context["total_expense_sum"] or 0
+        account_balance_sum = context["account_balance"] or 0
+
+        context["balance"] = total_income_sum - total_expense_sum + account_balance_sum
 
         context["currency"] = Currency.objects.get(id=1)
 
         return context
 
     def get_queryset(self):
-        incomes = Income.objects.all()
-        expenses = Expense.objects.all()
+        incomes = Income.objects.select_related("account", "category").values(
+            "date", "amount", "description", "category__name", "account__currency"
+        )
+        expenses = Expense.objects.select_related("account", "category").values(
+            "date", "amount", "description", "category__name", "account__currency"
+        )
 
         transactions = []
 
         for income in incomes:
             transactions.append(
                 {
-                    "date": income.date,
-                    "amount": income.amount,
-                    "description": income.description,
-                    "category": income.category,
+                    "date": income["date"],
+                    "amount": income["amount"],
+                    "description": income["description"],
+                    "category": income["category__name"],
                     "type": "income",
-                    "account_currency": income.account.currency
+                    "account_currency": income["account__currency"],
                 }
             )
 
         for expense in expenses:
             transactions.append(
                 {
-                    "date": expense.date,
-                    "amount": expense.amount,
-                    "description": expense.description,
-                    "category": expense.category,
-                    "account_currency": expense.account.currency
+                    "date": expense["date"],
+                    "amount": expense["amount"],
+                    "description": expense["description"],
+                    "category": expense["category__name"],
+                    "type": "expense",
+                    "account_currency": expense["account__currency"],
                 }
             )
 
