@@ -2,7 +2,6 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from account.currency_exchange import get_accounts_balance
-from account.forms import AccountForm, CurrencyForm
 from account.models import Account, Currency
 
 
@@ -28,6 +27,7 @@ class AccountListView(generic.ListView):
 
 
 class AccountCreateView(generic.CreateView):
-    form_class = AccountForm
+    model = Account
+    fields = ["account_type", "balance", "currency"]
     success_url = reverse_lazy("account:account-list")
     template_name = "account/account_form.html"

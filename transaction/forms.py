@@ -11,10 +11,7 @@ class CategoryForm(forms.ModelForm):
 
 
 class ExpenseForm(forms.ModelForm):
-    amount = forms.DecimalField(
-        required=True,
-        validators=[MinValueValidator(0.00)]
-    )
+    amount = forms.DecimalField(required=True, validators=[MinValueValidator(0.00)])
 
     class Meta:
         model = Expense
@@ -30,10 +27,7 @@ class ExpenseForm(forms.ModelForm):
 
 
 class IncomeForm(forms.ModelForm):
-    amount = forms.DecimalField(
-        required=True,
-        validators=[MinValueValidator(0.00)]
-    )
+    amount = forms.DecimalField(required=True, validators=[MinValueValidator(0.00)])
 
     class Meta:
         model = Income
