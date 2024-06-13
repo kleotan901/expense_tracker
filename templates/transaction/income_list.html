@@ -8,7 +8,7 @@
     </div>
     <div class="col total-income">
       {% if total_income_sum is not None %}
-      + {{ total_income_sum|floatformat:2 }} {{ currency }}
+        + {{ total_income_sum|floatformat:2|intcomma }} {{ currency.main_currency }}
       {% else %}
         0.00
       {% endif %}
@@ -22,6 +22,8 @@
       <th>Category</th>
       <th>Description</th>
       <th>Amount</th>
+      <th></th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -30,7 +32,14 @@
         <td>{{ income.date }}</td>
         <td>{{ income.category }}</td>
         <td>{{ income.description }}</td>
-        <td>+{{ income.amount }} {{ income.account.currency }}</td>
+        <td>
+          <span class="original-operation">+{{ income.amount }} {{ income.account.currency }}</span>
+          {% if currency.main_currency != income.account.currency %}
+            <p class="converted-operation">+{{ income.converted_amount }} {{ currency.main_currency }}</p>
+          {% endif %}
+        </td>
+        <td><a href="">UPDATE</a></td>
+        <td><a href="{% url 'transaction:income-delete' income.id %}">DELETE</a></td>
       </tr>
     {% endfor %}
     </tbody>

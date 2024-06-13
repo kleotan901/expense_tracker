@@ -4,11 +4,11 @@
 {% block content %}
   <div class="row">
     <div class="col">
-      <h4>Expenses <a href="{% url 'transaction:expense-create' %}"> + </a></h4> 
+      <h4>Expenses <a href="{% url 'transaction:expense-create' %}"> + </a></h4>
     </div>
     <div class="col total-expense">
       {% if total_expense_sum is not None %}
-      - {{ total_expense_sum|floatformat:2 }} {{ currency }}
+        - {{ total_expense_sum|floatformat:2|intcomma }} {{ currency.main_currency }}
       {% else %}
         0.00
       {% endif %}
@@ -21,6 +21,8 @@
       <th>Category</th>
       <th>Description</th>
       <th>Amount</th>
+      <th></th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -29,7 +31,14 @@
         <td>{{ expense.date }}</td>
         <td>{{ expense.category }}</td>
         <td>{{ expense.description }}</td>
-        <td>-{{ expense.amount }} {{ expense.account.currency }}</td>
+        <td>
+          <span class="original-operation">-{{ expense.converted_amount }} {{ currency.main_currency }}</span>
+            {% if currency.main_currency != expense.account.currency %}
+              <p class="converted-operation">-{{ expense.amount }} {{ expense.account.currency }}</p>
+            {% endif %}
+        </td>
+        <td><a href="">UPDATE</a></td>
+        <td><a href="{% url 'transaction:expense-delete' expense.id %}">DELETE</a></td>
       </tr>
     {% endfor %}
     </tbody>

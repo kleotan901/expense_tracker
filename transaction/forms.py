@@ -1,6 +1,7 @@
+from decimal import Decimal
+
 from django import forms
 from django.core.validators import MinValueValidator
-
 from transaction.models import Category, Expense, Income
 
 
@@ -19,8 +20,11 @@ class ExpenseForm(forms.ModelForm):
 
     def save(self, commit=True):
         expense = super().save(commit=False)
-        # Set the main_currency based on the selected account
-        expense.main_currency = expense.account.currency
+        expense.converted_amount = Decimal(expense.account.conversion_rate) * Decimal(
+            expense.amount
+        )
+        # change balance of the account
+        expense.account.converted_balance -= expense.converted_amount
         if commit:
             expense.save()
         return expense
@@ -32,3 +36,14 @@ class IncomeForm(forms.ModelForm):
     class Meta:
         model = Income
         fields = ["category", "account", "amount", "date", "description"]
+
+    def save(self, commit=True):
+        income = super().save(commit=False)
+        income.converted_amount = Decimal(income.account.conversion_rate) * Decimal(
+            income.amount
+        )
+        # change balance of the account
+        income.account.converted_balance += income.converted_amount
+        if commit:
+            income.save()
+        return income
