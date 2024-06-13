@@ -9,6 +9,9 @@ from transaction.views import (
     CategoryListView,
     ExpenseCreateView,
     IncomeCreateView,
+    ExpenseDeleteView,
+    IncomeDeleteView,
+    CategoryDeleteView,
 )
 
 app_name = "transaction"
@@ -19,6 +22,15 @@ urlpatterns = [
     path("incomes/", IncomeListView.as_view(), name="income-list"),
     path("categories/", CategoryListView.as_view(), name="category-list"),
     path("category/create/", CategoryCreateView.as_view(), name="category-create"),
+    path(
+        "category/<int:pk>/delete/",
+        CategoryDeleteView.as_view(),
+        name="category-delete",
+    ),
     path("expenses/create/", ExpenseCreateView.as_view(), name="expense-create"),
+    path(
+        "expenses/<int:pk>/delete/", ExpenseDeleteView.as_view(), name="expense-delete"
+    ),
     path("incomes/create/", IncomeCreateView.as_view(), name="income-create"),
+    path("incomes/<int:pk>/delete/", IncomeDeleteView.as_view(), name="income-delete"),
 ]
