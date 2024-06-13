@@ -26,6 +26,9 @@ class Expense(models.Model):
         limit_choices_to={"category_type": "expense"},
     )
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    converted_amount = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0, blank=True
+    )
     date = models.DateField()
     description = models.TextField(blank=True, null=True)
 
@@ -47,6 +50,9 @@ class Income(models.Model):
         limit_choices_to={"category_type": "income"},
     )
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    converted_amount = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0, blank=True
+    )
     date = models.DateField()
     description = models.TextField(blank=True, null=True)
 

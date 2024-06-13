@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load humanize %}
 
 {% block content %}
   <div class="row">
@@ -9,11 +10,11 @@
       {% if total_accounts_balance is not None %}
         {% if total_accounts_balance <= 0 %}
           <span class="balance-negative">
-            {{ total_accounts_balance|floatformat:2 }} {{ currency }}
+            {{ total_accounts_balance|floatformat:2|intcomma }} {{ currency }}
           </span>
         {% else %}
           <span class="balance-positive">
-            + {{ total_accounts_balance|floatformat:2 }} {{ currency }}
+            + {{ total_accounts_balance|floatformat:2|intcomma }} {{ currency.main_currency }}
           </span>
         {% endif %}
       {% else %}
@@ -26,8 +27,11 @@
   <table class="table table-hover">
     <thead class="table-active">
     <tr>
-      <th>Account type</th>
+      <th>Account</th>
       <th>Amount</th>
+      <th>Conversion rate</th>
+      <th></th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -35,7 +39,16 @@
     {% for account in account_list %}
       <tr>
         <td>{{ account.account_type }}</td>
-        <td>{{ account.balance }} {{ account.currency }}</td>
+        <td>
+          <span class="original-account-balance">{{ account.balance }} {{ account.currency }}</span>
+          {% if currency.main_currency != account.currency %}
+            <p class="converted-operation">{{ account.converted_balance }} {{ currency.main_currency }}</p>
+          {% endif %}
+        </td>
+        <td>{{ account.conversion_rate }}</td>
+        <td><a href="">UPDATE</a></td>
+        <td><a href="{% url 'account:account-delete' account.id %}">DELETE</a></td>
+
       </tr>
     {% endfor %}
 

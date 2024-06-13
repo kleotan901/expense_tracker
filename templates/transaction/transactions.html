@@ -3,18 +3,12 @@
 {% block content %}
   <div class="row">
   <div class="col">
-    <h4>Total balance:</h4>
+    
   </div>
-   <div class="col total-income">
-      {% if balance <= 0 %}
-        <span class="balance-negative">{{ balance|floatformat:2 }} 
-          {{ currency }}
+   <div class="col currency">
+        <span>
+          Main currency: {{ currency }}
         </span>
-      {% else %}
-        <span class="balance-positive">+ {{ balance|floatformat:2 }} 
-          {{ currency }}
-        </span>
-      {% endif %}
 
     </div>
     <table class="table table-hover">
@@ -32,7 +26,7 @@
           <td>{{ transaction.date }}</td>
           <td>{{ transaction.category }}</td>
           <td>{{ transaction.description }}</td>
-          <td> 
+          <td>
             {% if transaction.type == 'income' %}
               +{{ transaction.amount }} {{ transaction.account_currency }}
             {% else %}
