@@ -1,8 +1,8 @@
 from django.db.models import Sum
+
 from django.urls import reverse_lazy
 from django.views import generic
 
-from account.currency_exchange import get_total_amount, get_accounts_balance
 from account.models import Account, Currency
 
 from transaction.forms import CategoryForm, ExpenseForm, IncomeForm
@@ -16,23 +16,11 @@ class AllTransactionsView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(AllTransactionsView, self).get_context_data(**kwargs)
-        incomes = Income.objects.select_related("account", "category")
-        expenses = Expense.objects.select_related("account", "category")
-        context["total_income_sum"] = get_total_amount(incomes)
-        context["total_expense_sum"] = get_total_amount(expenses)
-        context["account_balance"] = get_accounts_balance(Account.objects.all())
-
-        total_income_sum = context["total_income_sum"] or 0
-        total_expense_sum = context["total_expense_sum"] or 0
-        account_balance_sum = context["account_balance"] or 0
-
-        context["balance"] = total_income_sum - total_expense_sum + account_balance_sum
-
         context["currency"] = Currency.objects.get(id=1)
-
         return context
 
     def get_queryset(self):
+        currency = Currency.objects.get(id=1)
         incomes = Income.objects.select_related("account", "category").values(
             "date", "amount", "description", "category__name", "account__currency"
         )
@@ -51,6 +39,7 @@ class AllTransactionsView(generic.ListView):
                     "category": income["category__name"],
                     "type": "income",
                     "account_currency": income["account__currency"],
+                    "currency": currency,
                 }
             )
 
@@ -63,6 +52,7 @@ class AllTransactionsView(generic.ListView):
                     "category": expense["category__name"],
                     "type": "expense",
                     "account_currency": expense["account__currency"],
+                    "currency": currency,
                 }
             )
 
@@ -76,8 +66,9 @@ class ExpenseListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ExpenseListView, self).get_context_data(**kwargs)
-        expenses = Expense.objects.all()
-        context["total_expense_sum"] = get_total_amount(expenses)
+        context["total_expense_sum"] = Expense.objects.aggregate(
+            total=Sum("converted_amount")
+        )["total"]
         context["currency"] = Currency.objects.get(id=1)
 
         return context
@@ -89,8 +80,9 @@ class IncomeListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(IncomeListView, self).get_context_data(**kwargs)
-        income = Income.objects.all()
-        context["total_income_sum"] = get_total_amount(income)
+        context["total_income_sum"] = Income.objects.aggregate(
+            total=Sum("converted_amount")
+        )["total"]
         context["currency"] = Currency.objects.get(id=1)
 
         return context
@@ -107,13 +99,31 @@ class CategoryCreateView(generic.CreateView):
     template_name = "transaction/category_form.html"
 
 
+class CategoryDeleteView(generic.DeleteView):
+    model = Category
+    success_url = reverse_lazy("transaction:category-list")
+    template_name = "transaction/delete_confirmation.html"
+
+
 class ExpenseCreateView(generic.CreateView):
     form_class = ExpenseForm
     success_url = reverse_lazy("transaction:expense-list")
     template_name = "transaction/expense_form.html"
 
 
+class ExpenseDeleteView(generic.DeleteView):
+    model = Expense
+    success_url = reverse_lazy("transaction:expense-list")
+    template_name = "transaction/delete_confirmation.html"
+
+
 class IncomeCreateView(generic.CreateView):
     form_class = IncomeForm
     success_url = reverse_lazy("transaction:income-list")
     template_name = "transaction/income_form.html"
+
+
+class IncomeDeleteView(generic.DeleteView):
+    model = Income
+    success_url = reverse_lazy("transaction:income-list")
+    template_name = "transaction/delete_confirmation.html"
