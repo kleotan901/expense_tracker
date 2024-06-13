@@ -19,8 +19,8 @@ def update_account_balance_on_expense_save(sender, instance, **kwargs):
 
 @receiver(pre_delete, sender=Expense)
 def update_account_balance_on_expense_delete(sender, instance, **kwargs):
-    instance.account_type.balance = F("balance") + instance.amount
-    instance.account_type.save()
+    instance.account.balance = F("balance") + instance.amount
+    instance.account.save()
 
 
 @receiver(pre_save, sender=Income)
@@ -38,5 +38,5 @@ def update_account_balance_on_income_save(sender, instance, **kwargs):
 
 @receiver(pre_delete, sender=Income)
 def update_account_balance_on_income_delete(sender, instance, **kwargs):
-    instance.account_type.balance = F("balance") - instance.amount
-    instance.account_type.save()
+    instance.account.balance = F("balance") - instance.amount
+    instance.account.save()

@@ -65,8 +65,7 @@ ROOT_URLCONF = "expense_tracker.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / 'templates']
-        ,
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -143,4 +142,5 @@ INTERNAL_IPS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
 

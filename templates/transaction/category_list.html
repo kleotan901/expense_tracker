@@ -7,7 +7,9 @@
     </h4>
     <ul class="category-list">
       {% for category in category_list %}
-        <li>{{ category }}</li>
+        <li>{{ category }}
+          <a class="btn btn-secondary btn-sm active" href="{% url 'transaction:category-delete' category.id %}">DELETE</a>
+        </li>
       {% endfor %}
     </ul>
   </div>
