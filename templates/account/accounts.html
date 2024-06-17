@@ -7,20 +7,25 @@
       <h4>Accounts <a href="{% url 'account:account-create' %}"> + </a></h4>
     </div>
     <div class="col total-income">
-      {% if total_accounts_balance is not None %}
-        {% if total_accounts_balance <= 0 %}
-          <span class="balance-negative">
-            {{ total_accounts_balance|floatformat:2|intcomma }} {{ currency }}
+
+      {% if user.is_authenticated %}
+
+        {% if total_accounts_balance is not None %}
+          {% if total_accounts_balance <= 0 %}
+            <span class="balance-negative">
+            {{ total_accounts_balance|floatformat:2|intcomma }} {{ currency.code }}
           </span>
+          {% else %}
+            <span class="balance-positive">
+            + {{ total_accounts_balance|floatformat:2|intcomma }} {{ currency.code }}
+          </span>
+          {% endif %}
         {% else %}
-          <span class="balance-positive">
-            + {{ total_accounts_balance|floatformat:2|intcomma }} {{ currency.main_currency }}
-          </span>
+          0.00
         {% endif %}
-      {% else %}
-        0.00
+        </div>
+        
       {% endif %}
-    </div>
   </div>
 
 
@@ -36,22 +41,28 @@
     </thead>
     <tbody>
 
-    {% for account in account_list %}
-      <tr>
-        <td>{{ account.account_type }}</td>
-        <td>
-          <span class="original-account-balance">{{ account.balance }} {{ account.currency }}</span>
-          {% if currency.main_currency != account.currency %}
-            <p class="converted-operation">{{ account.converted_balance }} {{ currency.main_currency }}</p>
-          {% endif %}
-        </td>
-        <td>{{ account.conversion_rate }}</td>
-        <td><a href="">UPDATE</a></td>
-        <td><a href="{% url 'account:account-delete' account.id %}">DELETE</a></td>
+    {% if user.is_authenticated %}
+      {% for account in account_list %}
+        <tr>
+          <td>{{ account.account_type }}</td>
+          <td>
+            <span class="original-account-balance">{{ account.balance }} {{ account.currency }}</span>
+            {% if currency.main_currency != account.currency %}
+              <p class="converted-operation">{{ account.converted_balance }} {{ currency.code }}</p>
+            {% endif %}
+          </td>
+          <td>{{ account.conversion_rate }}</td>
+          <td><a href="">UPDATE</a></td>
+          <td><a href="{% url 'account:account-delete' account.id %}">DELETE</a></td>
 
-      </tr>
-    {% endfor %}
+        </tr>
 
+      {% empty %}
+        <p>No accounts available.</p>
+      {% endfor %}
+
+
+    {% endif %}
     </tbody>
   </table>
 {% endblock %}

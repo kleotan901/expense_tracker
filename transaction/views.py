@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 
 from django.urls import reverse_lazy
@@ -9,121 +10,120 @@ from transaction.forms import CategoryForm, ExpenseForm, IncomeForm
 from transaction.models import Expense, Income, Category
 
 
-class AllTransactionsView(generic.ListView):
+class AllTransactionsView(LoginRequiredMixin, generic.ListView):
     template_name = "transaction/transactions.html"
     context_object_name = "transactions"
     paginate_by = 5
 
     def get_context_data(self, **kwargs):
         context = super(AllTransactionsView, self).get_context_data(**kwargs)
-        context["currency"] = Currency.objects.get(id=1)
+        context["currency"] = self.request.user.currency_id
         return context
 
     def get_queryset(self):
-        currency = Currency.objects.get(id=1)
-        incomes = Income.objects.select_related("account", "category").values(
-            "date", "amount", "description", "category__name", "account__currency"
-        )
-        expenses = Expense.objects.select_related("account", "category").values(
-            "date", "amount", "description", "category__name", "account__currency"
-        )
-
-        transactions = []
-
-        for income in incomes:
-            transactions.append(
-                {
-                    "date": income["date"],
-                    "amount": income["amount"],
-                    "description": income["description"],
-                    "category": income["category__name"],
-                    "type": "income",
-                    "account_currency": income["account__currency"],
-                    "currency": currency,
-                }
-            )
-
-        for expense in expenses:
-            transactions.append(
-                {
-                    "date": expense["date"],
-                    "amount": expense["amount"],
-                    "description": expense["description"],
-                    "category": expense["category__name"],
-                    "type": "expense",
-                    "account_currency": expense["account__currency"],
-                    "currency": currency,
-                }
-            )
-
-        transactions.sort(key=lambda x: x["date"], reverse=True)
+        expenses = Expense.objects.filter(account__user=self.request.user)
+        incomes = Income.objects.filter(account__user=self.request.user)
+        transactions = expenses.union(incomes).order_by('-date')
         return transactions
 
 
-class ExpenseListView(generic.ListView):
+class ExpenseListView(LoginRequiredMixin, generic.ListView):
     model = Expense
     paginate_by = 5
 
     def get_context_data(self, **kwargs):
         context = super(ExpenseListView, self).get_context_data(**kwargs)
-        context["total_expense_sum"] = Expense.objects.aggregate(
+        expense_of_user = Expense.objects.filter(account__user=self.request.user)
+        context["total_expense_sum"] = expense_of_user.aggregate(
             total=Sum("converted_amount")
         )["total"]
-        context["currency"] = Currency.objects.get(id=1)
+        base_currency_of_user = self.request.user.currency_id.code
+        context["currency"] = Currency.objects.get(code=base_currency_of_user)
 
         return context
 
+    def get_queryset(self):
+        return Expense.objects.filter(account__user=self.request.user)
 
-class IncomeListView(generic.ListView):
+
+class IncomeListView(LoginRequiredMixin, generic.ListView):
     model = Income
     paginate_by = 5
 
     def get_context_data(self, **kwargs):
         context = super(IncomeListView, self).get_context_data(**kwargs)
-        context["total_income_sum"] = Income.objects.aggregate(
+        income_of_user = Income.objects.filter(account__user=self.request.user)
+        context["total_income_sum"] = income_of_user.aggregate(
             total=Sum("converted_amount")
         )["total"]
-        context["currency"] = Currency.objects.get(id=1)
+        base_currency_of_user = self.request.user.currency_id.code
+        context["currency"] = Currency.objects.get(code=base_currency_of_user)
 
         return context
+
+    def get_queryset(self):
+        return Income.objects.filter(account__user=self.request.user)
 
 
 class CategoryListView(generic.ListView):
     model = Category
     paginate_by = 5
 
+    def get_queryset(self):
+        return Category.objects.filter(owner=self.request.user)
 
-class CategoryCreateView(generic.CreateView):
+
+class CategoryCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = CategoryForm
     success_url = reverse_lazy("transaction:category-list")
     template_name = "transaction/category_form.html"
 
+    # to add custom logic before saving to DB
+    # this ensures that new category is linked to the user who is currently logged in
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
-class CategoryDeleteView(generic.DeleteView):
+
+class CategoryDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Category
     success_url = reverse_lazy("transaction:category-list")
     template_name = "transaction/delete_confirmation.html"
 
 
-class ExpenseCreateView(generic.CreateView):
+class ExpenseCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = ExpenseForm
     success_url = reverse_lazy("transaction:expense-list")
     template_name = "transaction/expense_form.html"
 
+    # get_form_kwargs - adds the logged-in user to the form's keyword arguments
+    # to pass the user as a keyword argument to ExpenseForm instance
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
-class ExpenseDeleteView(generic.DeleteView):
+
+class ExpenseDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Expense
     success_url = reverse_lazy("transaction:expense-list")
     template_name = "transaction/delete_confirmation.html"
 
 
-class IncomeCreateView(generic.CreateView):
+class IncomeCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = IncomeForm
     success_url = reverse_lazy("transaction:income-list")
     template_name = "transaction/income_form.html"
 
+    # get_form_kwargs - adds the logged-in user to the form's keyword arguments
+    # to pass the user as a keyword argument to IncomeForm instance
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
-class IncomeDeleteView(generic.DeleteView):
+
+class IncomeDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Income
     success_url = reverse_lazy("transaction:income-list")
     template_name = "transaction/delete_confirmation.html"

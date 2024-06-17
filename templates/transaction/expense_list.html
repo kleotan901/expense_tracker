@@ -8,7 +8,7 @@
     </div>
     <div class="col total-expense">
       {% if total_expense_sum is not None %}
-        - {{ total_expense_sum|floatformat:2|intcomma }} {{ currency.main_currency }}
+        - {{ total_expense_sum|floatformat:2|intcomma }} {{ currency.code }}
       {% else %}
         0.00
       {% endif %}
@@ -32,7 +32,7 @@
         <td>{{ expense.category }}</td>
         <td>{{ expense.description }}</td>
         <td>
-          <span class="original-operation">-{{ expense.converted_amount }} {{ currency.main_currency }}</span>
+          <span class="original-operation">-{{ expense.converted_amount }} {{ currency.code }}</span>
             {% if currency.main_currency != expense.account.currency %}
               <p class="converted-operation">-{{ expense.amount }} {{ expense.account.currency }}</p>
             {% endif %}

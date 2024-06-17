@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import F
 
 from account.models import Account
+from expense_tracker import settings
 
 
 class Category(models.Model):
@@ -12,6 +13,13 @@ class Category(models.Model):
 
     name = models.CharField(max_length=255)
     category_type = models.CharField(max_length=7, choices=CATEGORY_TYPE_CHOICES)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="categories",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
 
     def __str__(self):
         return f"{self.name} ({self.get_category_type_display()})"

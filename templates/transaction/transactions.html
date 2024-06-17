@@ -7,7 +7,7 @@
   </div>
    <div class="col currency">
         <span>
-          Main currency: {{ currency }}
+          Main currency: {{ currency.code }}
         </span>
 
     </div>
@@ -21,20 +21,28 @@
       </tr>
       </thead>
       <tbody>
+      
+      {% if user.is_authenticated %}
+      
       {% for transaction in transactions %}
         <tr>
           <td>{{ transaction.date }}</td>
           <td>{{ transaction.category }}</td>
           <td>{{ transaction.description }}</td>
           <td>
-            {% if transaction.type == 'income' %}
-              +{{ transaction.amount }} {{ transaction.account_currency }}
+            {% if transaction.category.category_type == 'income' %}
+              +{{ transaction.amount }} {{ transaction.account.currency }}
             {% else %}
-              -{{ transaction.amount }} {{ transaction.account_currency }}
+              -{{ transaction.amount }} {{ transaction.account.currency }}
             {% endif %}
           </td>
         </tr>
       {% endfor %}
+        
+        {% else %}
+          <p><a href="{% url 'login' %}">Click here to LOGIN</a></p>
+      
+      {% endif %}
       </tbody>
     </table>
   </div>

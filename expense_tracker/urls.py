@@ -18,13 +18,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from account.views import CurrencyUpdateView
+from account.views import UserCurrencyUpdateView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("__debug__/", include("debug_toolbar.urls")),
-    path("user-profile/", include("django.contrib.auth.urls")),
-    path("index/<int:pk>/", CurrencyUpdateView.as_view(), name="currency-chose"),
+    path("accounts/", include("django.contrib.auth.urls")),
     path("transactions/", include("transaction.urls", namespace="transaction")),
     path("accounts/", include("account.urls", namespace="accounts")),
 ]
