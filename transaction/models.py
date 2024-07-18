@@ -1,6 +1,8 @@
 from django.db import models
+from django.db.models import F
 
 from account.models import Account
+from expense_tracker import settings
 
 
 class Category(models.Model):
@@ -11,6 +13,13 @@ class Category(models.Model):
 
     name = models.CharField(max_length=255)
     category_type = models.CharField(max_length=7, choices=CATEGORY_TYPE_CHOICES)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="categories",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
 
     def __str__(self):
         return f"{self.name} ({self.get_category_type_display()})"
@@ -24,12 +33,20 @@ class Expense(models.Model):
         null=True,
         limit_choices_to={"category_type": "expense"},
     )
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    converted_amount = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0, blank=True
+    )
     date = models.DateField()
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.amount} - {self.category}"
+
+    def save(self, *args, **kwargs):
+        if self.amount is None:
+            self.amount = 0.00
+        super().save(*args, **kwargs)
 
 
 class Income(models.Model):
@@ -40,9 +57,17 @@ class Income(models.Model):
         null=True,
         limit_choices_to={"category_type": "income"},
     )
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    converted_amount = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0, blank=True
+    )
     date = models.DateField()
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.amount} - {self.category}"
+
+    def save(self, *args, **kwargs):
+        if self.amount is None:
+            self.amount = 0.00
+        super().save(*args, **kwargs)

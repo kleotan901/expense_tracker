@@ -9,28 +9,34 @@
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
-
   {% block title %}
     <title class="border-primary">Expense Tracker</title>
   {% endblock %}
-
 </head>
 <body>
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-4 col-lg-3">
-      {% if profile.is_authenticate %}
-        <p>{{ profile.username }}</p>
-        <p><a href="#">Logout</a></p>
-        {% else %}
-        <a href="#">Login</a>
-      {% endif %}
+  <header class="header">
+    <div class="row">
+      <div class="col-md-4 col-lg-3 login">
 
+        {% if user.is_authenticated %}
+          
+          <p>User: {{ user.username }}</p>
+          <form action="{% url 'logout' %}" method="POST" id="logout" class="nav-link">
+            {% csrf_token %}
+            <input type="submit" value="Logout">
+          </form>
+        {% else %}
+          <p><a href="{% url 'account:register' %}">Registrate</a></p>
+          <p><a href="{% url 'login' %}">Login</a></p>
+        {% endif %}
+
+      </div>
+      <div class="col-md-8 col-lg-9 text-center">
+        <h1>Expense Tracker Web-App</h1>
+      </div>
     </div>
-    <div class="col-md-8 col-lg-9 text-center">
-      <h1>Expense Tracker Web-App</h1>
-    </div>
-  </div>
+  </header>
 
   <div class="row">
     <div class="col-md-4 col-lg-3">
@@ -38,17 +44,16 @@
         {% include "includes/sidebar.html" %}
       {% endblock %}
     </div>
-
     <div class="col-md-8 col-lg-9">
-      {% block content %}  {% endblock %}
+      {% block content %}{% endblock %}
       {% block pagination %}
         {% include "includes/pagination.html" %}
       {% endblock %}
     </div>
-
   </div>
 </div>
 
+<script src="{% static 'js/scripts.js' %}"></script>
 
 </body>
 </html>

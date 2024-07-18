@@ -1,31 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h3>All Transactions</h3>
-  <table class="table table-hover">
-    <thead class="table-active">
-    <tr>
-      <th>Date</th>
-      <th>Category</th>
-      <th>Description</th>
-      <th>Amount</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for transaction in transactions %}
+  <div class="row">
+  <div class="col">
+    
+  </div>
+   <div class="col currency">
+        <span>
+          Main currency: {{ currency.code }}
+        </span>
+
+    </div>
+    <table class="table table-hover">
+      <thead class="table-active">
       <tr>
-        <td>{{ transaction.date }}</td>
-        <td>{{ transaction.category }}</td>
-        <td>{{ transaction.description }}</td>
-        <td>
-          {% if transaction.type == 'income' %}
-            +{{ transaction.amount }}
-          {% else %}
-            -{{ transaction.amount }}
-          {% endif %}
-        </td>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Amount</th>
       </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+      
+      {% if user.is_authenticated %}
+      
+      {% for transaction in transactions %}
+        <tr>
+          <td>{{ transaction.date }}</td>
+          <td>{{ transaction.category }}</td>
+          <td>{{ transaction.description }}</td>
+          <td>
+            {% if transaction.category.category_type == 'income' %}
+              +{{ transaction.amount }} {{ transaction.account.currency }}
+            {% else %}
+              -{{ transaction.amount }} {{ transaction.account.currency }}
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+        
+        {% else %}
+          <p><a href="{% url 'login' %}">Click here to LOGIN</a></p>
+      
+      {% endif %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}

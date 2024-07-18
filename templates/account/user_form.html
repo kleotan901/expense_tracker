@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <h3 class="form-multiline"></h3>
+
+  {% if error %}
+    <p class="error-message">{{ error }}</p>
+  {% endif %}
+
+  <form action="" method="post" class="flat-form">
+  <h4>{{ request.user.is_authenticated|yesno:"Update,Register" }} user</h4>
+    {% csrf_token %}
+    {{ form|crispy }}
+    <br>
+    <input type="submit" value="Submit" class="submit-button">
+  </form>
+{% endblock %}
