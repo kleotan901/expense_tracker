@@ -11,13 +11,14 @@ from transaction.views import (
     IncomeCreateView,
     ExpenseDeleteView,
     IncomeDeleteView,
-    CategoryDeleteView,
+    CategoryDeleteView, dashboard,
 )
 
 app_name = "transaction"
 
 urlpatterns = [
     path("", AllTransactionsView.as_view(), name="all-transactions"),
+    path("dashboard/", dashboard, name="dashboard"),
     path("expenses/", ExpenseListView.as_view(), name="expense-list"),
     path("incomes/", IncomeListView.as_view(), name="income-list"),
     path("categories/", CategoryListView.as_view(), name="category-list"),
