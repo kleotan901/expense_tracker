@@ -1,18 +1,11 @@
 from django.contrib import admin
 from django.urls import path
 
-from transaction.views import (
-    AllTransactionsView,
-    ExpenseListView,
-    IncomeListView,
-    CategoryCreateView,
-    CategoryListView,
-    ExpenseCreateView,
-    IncomeCreateView,
-    ExpenseDeleteView,
-    IncomeDeleteView,
-    CategoryDeleteView, dashboard,
-)
+from transaction.views import (AllTransactionsView, CategoryCreateView,
+                               CategoryDeleteView, CategoryListView,
+                               ExpenseCreateView, ExpenseDeleteView,
+                               ExpenseListView, IncomeCreateView,
+                               IncomeDeleteView, IncomeListView, dashboard)
 
 app_name = "transaction"
 

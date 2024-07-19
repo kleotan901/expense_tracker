@@ -1,7 +1,8 @@
 from django.db.models import F
-from django.db.models.signals import pre_save, pre_delete
+from django.db.models.signals import pre_delete, pre_save
 from django.dispatch import receiver
-from .models import Expense, Income, Account
+
+from .models import Account, Expense, Income
 
 
 @receiver(pre_save, sender=Expense)

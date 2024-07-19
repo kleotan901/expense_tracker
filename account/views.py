@@ -1,11 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.shortcuts import redirect
-
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 
-from account.forms import AccountForm, UserAccountCreateForm, UserCurrencyUpdateForm
+from account.forms import (AccountForm, UserAccountCreateForm,
+                           UserCurrencyUpdateForm)
 from account.models import Account, Currency, UserAccount
 
 
@@ -22,13 +22,13 @@ class UserCurrencyUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = "account/currency_settings.html"
 
     def get_object(self, *args, **kwargs):
-        return self.request.user # Return the current logged-in user
+        return self.request.user  # Return the current logged-in user
 
 
 class AccountListView(LoginRequiredMixin, generic.ListView):
     model = Account
     template_name = "account/accounts.html"
-    #login_url = "registration/login.html"
+    # login_url = "registration/login.html"
     paginate_by = 5
 
     def get_context_data(self, **kwargs):

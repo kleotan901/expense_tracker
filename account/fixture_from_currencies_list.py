@@ -10,7 +10,7 @@ for code, name in CURRENCY_CHOICES:
     currency = {
         "model": "account.currency",
         "pk": pk,
-        "fields": {"code": code, "main_currency": name}
+        "fields": {"code": code, "main_currency": name},
     }
     currencies.append(currency)
     pk += 1

@@ -33,7 +33,9 @@ class ExpenseForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if user is not None:
             self.fields["account"].queryset = Account.objects.filter(user=user)
-            self.fields["category"].queryset = Category.objects.filter(owner=user, category_type="expense")
+            self.fields["category"].queryset = Category.objects.filter(
+                owner=user, category_type="expense"
+            )
 
     def save(self, commit=True):
         expense = super().save(commit=False)
@@ -60,7 +62,9 @@ class IncomeForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if user is not None:
             self.fields["account"].queryset = Account.objects.filter(user=user)
-            self.fields["category"].queryset = Category.objects.filter(owner=user, category_type="income")
+            self.fields["category"].queryset = Category.objects.filter(
+                owner=user, category_type="income"
+            )
 
     def save(self, commit=True):
         income = super().save(commit=False)
