@@ -9,10 +9,11 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
@@ -128,8 +129,8 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-#STATICFILES_DIRS = [BASE_DIR / "static",]
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATICFILES_DIRS = [BASE_DIR / "static",]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -141,5 +142,3 @@ INTERNAL_IPS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
-
-

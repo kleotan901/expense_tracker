@@ -26,13 +26,17 @@ class Currency(models.Model):
 
 
 class Account(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="accounts", on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name="accounts", on_delete=models.CASCADE
+    )
     account_type = models.CharField(max_length=255)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     converted_balance = models.DecimalField(
         max_digits=10, decimal_places=2, default=0, null=True, blank=True
     )
-    conversion_rate = models.DecimalField(max_digits=10, decimal_places=4, null=True, blank=True)
+    conversion_rate = models.DecimalField(
+        max_digits=10, decimal_places=4, null=True, blank=True
+    )
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES)
 
     def __str__(self):

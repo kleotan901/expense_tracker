@@ -1,17 +1,17 @@
+import plotly.express as px
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.shortcuts import render
-
 from django.urls import reverse_lazy
 from django.views import generic
 
 from account.models import Currency
-from transaction.analisys import convert_to_dataframe, get_data_income_analisys, get_data_expense_analisys
-
+from transaction.analisys import (convert_to_dataframe,
+                                  get_data_expense_analisys,
+                                  get_data_income_analisys)
 from transaction.forms import CategoryForm, ExpenseForm, IncomeForm
-from transaction.models import Expense, Income, Category
-import plotly.express as px
+from transaction.models import Category, Expense, Income
 
 
 class AllTransactionsView(LoginRequiredMixin, generic.ListView):
@@ -27,7 +27,7 @@ class AllTransactionsView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         expenses = Expense.objects.filter(account__user=self.request.user)
         incomes = Income.objects.filter(account__user=self.request.user)
-        transactions = expenses.union(incomes).order_by('-date')
+        transactions = expenses.union(incomes).order_by("-date")
         return transactions
 
 
@@ -193,5 +193,3 @@ def dashboard(request):
             "pie_chart_expense": pie_chart_expense,
         },
     )
-
-
